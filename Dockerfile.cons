@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+WORKDIR /app
+EXPOSE 4000
+
+ENV ASPNETCORE_URLS=http://+:4000
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["ApiConsola/ConsoleApp1/ApiConsola.csproj", "ApiConsola/ConsoleApp1/"]
+RUN dotnet restore "ApiConsola\ConsoleApp1\ApiConsola.csproj"
+COPY . .
+WORKDIR "/src/ApiConsola/ConsoleApp1/"
+RUN dotnet build "ApiConsola.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "ApiConsola.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ApiConsola.dll"]
