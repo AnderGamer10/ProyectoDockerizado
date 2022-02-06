@@ -1,6 +1,8 @@
 # Descargar
 Ya que el proyecto lo he hecho en Visual Studio y no en Visual Studio Code hay que descargar por separado y juntarlo en una carpeta para que funcione el docker.
 
+La carpeta Proyecto es la pagina Web
+
 Para poder utilizar el programa hay que descargar la apiConsola/apiTiempo y seguir estos pasos:
 
 Al hacer git clone se crearan las carpetas WebApiTiempo y ApiConsola.
